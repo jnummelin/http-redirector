@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+
+  redirector:
+    build: .
+    environment:
+      REDIRECT_BASE: "http://www.example.com"
+    ports:
+      - "8080"

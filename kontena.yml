@@ -1,0 +1,62 @@
+stack: jussi/http-redirector
+version: 0.1.0
+variables:
+
+  use_lb:
+    type: boolean
+    from:
+      env: USE_LB
+      prompt: Use loadbalancer
+
+  lb:
+    only_if: use_lb
+    type: string
+    from:
+      env: LOADBALANCER
+      service_link:
+        prompt: Choose a loadbalancer
+        image: kontena/lb
+
+  vhost:
+    only_if: use_lb
+    type: string
+    empty_is_nil: true
+    required: false
+    from:
+      env: VHOST
+      prompt: Virtual host, empty for none
+
+  vpath:
+    only_if: use_lb
+    type: string
+    empty_is_nil: true
+    required: false
+    from:
+      env: VPATH
+      prompt: Virtual path, empty for none
+
+  redirect_base:
+    type: string
+    from:
+      env: REDIRECT_BASE
+      prompt: Redirect base URL
+
+services:
+  redirector:
+    image: jnummelin/http-redirector:1.0.0
+    links:
+      # {% if use_lb %}
+      - {{ lb }}
+      # {% endif %}
+    environment:
+      REDIRECT_BASE: {{ redirect_base }}
+      # {% if use_lb %}
+      KONTENA_LB_INTERNAL_PORT: 8080
+      # {% if vhost %}
+      KONTENA_LB_VIRTUAL_HOSTS: {{ vhost }}
+      # {% endif %}
+      # {% if vpath %}
+      KONTENA_LB_VIRTUAL_PATH: {{ vpath }}
+      KONTENA_LB_KEEP_VIRTUAL_PATH: 'true'
+      # {% endif %}
+      # {% endif %}
