@@ -7,4 +7,4 @@ services:
     environment:
       REDIRECT_BASE: "http://www.example.com"
     ports:
-      - "8080"
+      - "8888:8080"

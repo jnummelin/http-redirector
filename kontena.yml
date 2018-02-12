@@ -1,5 +1,5 @@
 stack: jussi/http-redirector
-version: 0.1.0
+version: 1.1.0
 variables:
 
   use_lb:
@@ -43,7 +43,7 @@ variables:
 
 services:
   redirector:
-    image: jnummelin/http-redirector:1.0.0
+    image: jnummelin/http-redirector:1.1.0
     links:
       # {% if use_lb %}
       - {{ lb }}
