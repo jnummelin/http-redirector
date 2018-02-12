@@ -43,7 +43,7 @@ variables:
 
 services:
   redirector:
-    image: jnummelin/http-redirector:1.0.0
+    image: jnummelin/http-redirector:next
     links:
       # {% if use_lb %}
       - {{ lb }}

@@ -1,0 +1,4 @@
+package: github.com/jnummelin/http-redirector
+import:
+- package: github.com/TV4/graceful
+  version: ~0.3.2

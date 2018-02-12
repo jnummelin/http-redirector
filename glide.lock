@@ -1,0 +1,6 @@
+hash: 31e03a948ec5285794188ec7027f09926acd71745d406b336d1184fc41e6c2f0
+updated: 2018-02-12T23:56:22.823921671+02:00
+imports:
+- name: github.com/TV4/graceful
+  version: 8c328f88ce54ce54d28f4e4d3df6166e210b9dc8
+testImports: []

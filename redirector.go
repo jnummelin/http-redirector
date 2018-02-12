@@ -1,22 +1,25 @@
 package main
 
 import (
-    "log"
-    "net/http"
-    "os"
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/TV4/graceful"
 )
 
-func handleAll(w http.ResponseWriter, r *http.Request) {
-    path := r.URL.Path
-    log.Println(path)
-    http.Redirect(w, r, os.Getenv("REDIRECT_BASE")+path, http.StatusMovedPermanently)
+func main() {
+	// Handles gracefull shutdown nicely
+	graceful.LogListenAndServe(&http.Server{
+		Addr:    ":8080",
+		Handler: &server{},
+	})
 }
 
-func main() {
+type server struct{}
 
-    http.HandleFunc("/", handleAll)
-
-    //   a.Initialize(os.Getenv("REDIRECT_BASE"))
-
-    http.ListenAndServe(":8080", nil)
+func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	path := r.URL.Path
+	log.Println(path)
+	http.Redirect(w, r, os.Getenv("REDIRECT_BASE")+path, http.StatusMovedPermanently)
 }
