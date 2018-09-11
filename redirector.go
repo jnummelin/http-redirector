@@ -9,9 +9,13 @@ import (
 )
 
 func main() {
+	listenAddress := os.Getenv("LISTEN_ADDRESS")
+	if listenAddress == "" {
+		listenAddress = ":8080"
+	}
 	// Handles gracefull shutdown nicely
 	graceful.LogListenAndServe(&http.Server{
-		Addr:    ":8080",
+		Addr:    listenAddress,
 		Handler: &server{},
 	})
 }
